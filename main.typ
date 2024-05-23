@@ -26,4 +26,7 @@
 
 #heading(level: 1)[Árnyék szimuláció]
 = Percentage closer filtering
+= Cascaded shadow maps
 = Exponential shadow maps
+
+#bibliography("references.yml", full: true)
