@@ -11,6 +11,7 @@
   set heading(numbering: "1.")
   set page(paper: "a4", margin: 2.5cm, numbering: "1")
   set outline(indent: true)
+  set ref(supplement: none)
 
   show outline.entry.where(level: 1): it => strong[
     #link(it.element.location(), it.body)
