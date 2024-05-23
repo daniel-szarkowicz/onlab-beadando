@@ -1,6 +1,8 @@
+#let todo = text.with(red)
+
 #let template(
   title: [Cím],
-  subtitle: none,
+  subtitle: [Alcím],
   author: [Mézga Géza],
   consulent: [Gézga Méza],
   body
@@ -10,14 +12,11 @@
   set page(paper: "a4", margin: 2.5cm, numbering: "1")
   set outline(indent: true)
 
-  show outline.entry.where(level: 1): it => {
-    set outline(fill: none)
-    strong[
-      #link(it.element.location(), it.body)
-      #box(width: 1fr, repeat[ ])
-      #link(it.element.location(), it.page)
-    ]
-  }
+  show outline.entry.where(level: 1): it => strong[
+    #link(it.element.location(), it.body)
+    #box(width: 1fr, repeat[ ])
+    #link(it.element.location(), it.page)
+  ]
 
   show heading.where(level: 1): it => {
     pagebreak(weak: true)
@@ -41,9 +40,7 @@
       #v(1fr)
       #text(size: 2em, weight: "bold", title)
       #v(1em)
-      #if subtitle != none [
-        #text(size: 1.5em)[#smallcaps(subtitle)]
-      ]
+      #text(size: 1.5em)[#smallcaps(subtitle)]
       #v(1fr)
       #grid(columns: (1fr, 1fr),
         [
@@ -62,6 +59,8 @@
   counter(page).update(1)
 
   outline()
+
+  set heading(offset: 1)
 
   body
 }

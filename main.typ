@@ -1,23 +1,29 @@
 #import "templ.typ": template
 
 #show: template.with(
-  title: [Rigidbody szimuláció],
+  title: [Rigidbody és árnyék szimuláció],
   subtitle: [Önálló laboratórium],
   author: [Szarkowicz Dániel],
   consulent: [Fridvalszky András],
 )
 
+#heading(level: 1)[Rigid body szimuláció]
+= Fizikai modell
+== Mozgás
+== Forgás
+== Ütközés
 
-= Rigid body szimuláció
+= Ütközés detektálás
+== Broad phase
+=== Sort and sweep
+=== 3 axis sort and sweep
+=== R-Tree
 
-== Gilbert
+== Narrow phase
+=== Egyszerű gömb ütközés
+=== GJK
+=== EPA
 
-== Johnson
-
-== Keerthi
-
-Ez itt a szöveg helye\
-második sor
-
-= Második fejezet
-Content
+#heading(level: 1)[Árnyék szimuláció]
+= Percentage closer filtering
+= Exponential shadow maps
