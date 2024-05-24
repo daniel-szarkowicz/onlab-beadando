@@ -128,6 +128,38 @@ innentől a @sphere-collision fejezetben írt módon lehet kiszámolni, hogy a k
 test ütközik-e, és ha igen, akkor mik az ütközési paramétereik.
 
 === EPA
+A GJK egyik hiányossága, hogy ha két test ütközik, akkor csak annyit mond, hogy
+ütköznek, nem ad nekünk használható ütközési paramétereket. Az expanding
+polytope algorithm (EPA) úgy segít, hogy a GJK-ból kapott szimplexet iteratívan
+bővíti újabb pontokkal, amíg megtalálja az átfedő terület szélességét. Az EPA
+a GJK-ban használt legközelebbi pont algoritmust használja, de nem az egész
+politópon futtatja, hanem csak a politóp oldalait alkotó szimplexeken.
+
+Az EPA a Minkowski különbségnek az origóhoz legközelebbi felszíni pontját keresi
+meg. Ezt úgy éri el, hogy a politóp legközelebbi pontjának irányában kér egy új
+pontotk a különbség support functionjétől, ha talált távolabbi pontot, akkor
+kiegészíti a politópot az új ponttal, ha nem talált távolabbi pontot, akkor
+megtaláltuk a Minkowski különbség legközelebbi felszíni pontját.
+
+#figure(
+  todo_image[EPA],
+  caption: [
+    Az EPA felfedte a Minkowski különbség egy részét, amíg megtalálta a
+    legközelebbi felszíni pontot.
+  ]
+)
+
+A politóp bővítése nem egy könnyű feladat, ugyanis ha hozzáadunk egy új pontot
+a politóphoz, akkor ki kell számolni, hogy milyen régi oldalakat kell kitörölni,
+és hogy milyen új oldalakat kell felvenni. Azokat a régi oldalakat kell törölni,
+amelyek az új pont "alatt" vannak, azaz az egyik oldalukon az új pont van, a
+másik oldalukon pedig az origó. Az új oldalakat úgy kell hozzáadni, hogy a régi
+oldalak azon széleit, amelyeket csak az egyik oldalról határolt kitörölt oldal
+összekötjük az új ponttal. Ez a bővítés elképzelhető egy konvex burok iteratív
+felépítéseként is.
+
+A szimuláció @dyn4j-gjk 2 dimenziós algoritmusának a 3 dimenziós
+generalizációját használja.
 
 == Broad phase
 Az összes pár megvizsgálása $O(n^2)$ lenne, ami nagyon lassú. Szerencsére
