@@ -20,7 +20,7 @@
 
   show outline.entry.where(level: 1): it => strong[
     #link(it.element.location(), it.body)
-    #box(width: 1fr, repeat[ ])
+    #box(width: 1fr, h(1fr))
     #link(it.element.location(), it.page)
   ]
 
@@ -67,6 +67,8 @@
   outline()
 
   set heading(offset: 1)
+
+  set par(justify: true)
 
   body
 }
