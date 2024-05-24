@@ -66,6 +66,62 @@ $
 $
 
 === GJK
+Egy elterjedt ütközés detektálási algoritmus a Gilbert-Johnson-Keerthi @gjk
+algoritmus, ami tetszőleges convex testek távolságát tudja meghatározni, ha a
+testekre definiálva van a support function. A support functionnek egy adott
+irányban kell a test legtávolabbi pontját visszaadni.
+
+Az algoritmus két test Minkowski különbségéről vizsgálja meg, hogy benne van-e
+az origó. Ha a különbségben benne van az origó, akkor ütközést talált, ha a
+különbségben nincs benne az origó, akkor Minkowski különbség és az origó
+távolsága a két test távolsága. A Minkowski különbség legközelebbi pontjából
+ki lehet fejteni a két test legközelebbi pontját is.
+#figure(
+  grid(columns: 2, gutter: 10pt,
+    todo_image[Minkowski különbség],
+    todo_image[Minkowski különbség],
+  ),
+  caption: [
+    Egy #todo[TODO] és egy #todo[TODO] minkowski különbsége. Az első képen a két
+    test ütközik, a Minkowski különbségük tartalmazza az origót. A második képen
+    a két test nem ütközik, a távolságuk megegyezik a Minkowski különbség és az
+    origó távolságával.
+  ]
+)
+A Minkowski különbség összes pontján egy kicsit sok időbe telne végig iterálni,
+de a különbséget felépítő szimplexeken (2 dimenzióban háromszög, 3 dimenzióban
+tetraéder) már lehetséges. Ehhez a Minkowski különbség support functionjére lesz
+szükség, amit a következő módon számíthatunk ki egy $A$ és egy $B$ test support
+functionjéből:
+$
+  s(bold(d)) = s_A (bold(d)) - s_B (-bold(d))
+$
+Tehát az algoritmus a Minkowski különbség szimplexein iterál végig. Ezekkel a
+szimplexekkel egyre közelíteni szeretnénk az origót, míg vagy a szimplex
+tartalmazza az origót, vagy nem sikerült közelebb jutnunk az origóhoz. Az
+origóhoz úgy lehet közelíteni, hogy a szimplexnek vesszük az origóhoz a
+legközelebbi részszimplexét és a legközelebbi pontját, és a legközelebbi
+ponttal ellentétes irányba kérünk a support functiontől egy új pontot, amit
+hozzáadunk a szimplexhez.
+
+Az algoritmus két féle képpen került implementációra.
+
+Az első implementáció baricentrikus koordinátákkal kereste meg a legközelebbi
+részszimplexet és a legközelebbi pontot. Sajnos a legközelebbi részszimplex
+keresésnél néha nem egyértelmű, hogy melyik részszimplex van közelebb és többet
+is meg kell vizsgálni, ami nem csak azért probléma, mert több számítást végez,
+de azért is, mert így másolni kell a szimplex adatait, amit nem lehet
+kioptimalizálni.
+
+A második implementáció a teret részszimplexenként két részre osztotja és
+megnézi, hogy a részszimplexen belül vagy kívül esik-e az origó. Előbb vagy
+utóbb egy néhány részszimplex vagy körbe fogja az origót, és akkor tudjuk, hogy
+a részszimplexek által alkotott szimplex tartalmazza az origóhoz a legközelebbi
+pontot, vagy egy ponton (0 dimenziós szimplex) kívül esik az origó, és akkor
+tudjuk, hogy a pont a legközelebbi pont (és részszimplex) az origóhoz. A
+szimuláció @dyn4j-gjk 2 dimenziós algoritmusának a 3 dimenziós generalizációját
+használja.
+
 === EPA
 
 == Broad phase
