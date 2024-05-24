@@ -102,6 +102,30 @@ végrehajtani, ami lassabb, mint az egy tengely menti sort and sweep és az AABB
 ellenőrzés.
 
 === R-Tree
+A szimulációban használt broad phase algoritmus (adatstruktúra) az R-Tree.
+Az R-Tree a B-Tree-nek egy kibővített változata, ami többdimenzió szerint
+rendezhető adatokra tud hatékony keresést biztosítani.
+
+A R-Tree minimal bounding box-okból épül fel. Ezek olyan AABB-k, amiknél kisebb
+AABB nem lenne képes bentfoglalni a tartalmazott elemeit. Az R-Tree-be
+felépítésekor egyesével illesztjük be az AABB-ket. Az R-Tree-nék két fontos
+algoritmus van: legjobb csúcs kiválasztása a beillesztéshez, és legjobb vágás
+kiszámítása, ha egy csúcs megtelt. A szimuláció a beillesztéshez a legkisebb
+térfogat növekedést választna, a vágáshoz a Quadratic splitet @rstar használ.
+
+#figure(
+  todoImage[R-Tree],
+  caption: [Az R-Tree]
+)
+
+Az R-Tree-k felépítéséhez és karbantartásához számos algoritmus jött létre.
+
+Az R\*-Tree @rstar optimálisabb csúcsválasztást és optimálisabb vágást
+használ és ha a vágás után egy elem nagyon nem illik be egyik csoportba sem,
+akkor újra beilleszti a fába, hátha talál jobb helyet.
+
+Az STR @str és az OMT @omt nem egyesével építi fel a fát, hanem egyszerre
+dolgozik az összes adattal, így közel tökéletes fákat tudnak felépíteni.
 
 == Narrow phase
 === Egyszerű gömb ütközés

@@ -66,3 +66,14 @@ esm:
   title: Exponential Shadow Maps
   author: [Thomas Annen, Tom Mertens, Hans-Peter Seidel, Eddy Flerackers, Jan Kautz]
   url: https://jankautz.com/publications/esm_gi08.pdf
+
+str:
+  type: report
+  title: "STR: A SIMPLE AND EFFICIENT ALGORITHM FOR R-TREE PACKING"
+  author: [Scott T. Leutenegger, Jeffrey M. Edgington, Mario A. Lopez]
+  url: https://apps.dtic.mil/sti/pdfs/ADA324493.pdf
+
+omt:
+  type: article
+  title: "OMT: Overlap Minimizing Top-down Bulk Loading Algorithm for R-Tree"
+  url: http://ftp.informatik.rwth-aachen.de/Publications/CEUR-WS/Vol-74/files/FORUM_18.pdf
