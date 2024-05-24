@@ -29,11 +29,50 @@ módszerek is, példáuk a Runge-Kutta metódus.
 A szimuláció a test sebessége helyett a test lendületét tárolja, ez a következő
 módon áll kapcsolatban a sebességgel:
 $
-  p = m v
+  p(t) = m dot v(t)
 $
 Ennek az előnyeiről bővebben az @ütközés fejezetben fogok írni.
 
 == Forgás
+A testek forgása a test mozgásához hasonlóan kezelhető. A testnek van egy
+elfordulása, amit egy forgatásmátrixban tárolunk és egy szögsebessége, amit
+egy tengellyel és egy nagysággal jellemzünk, ez egy vektorban tárolható. 
+
+A testnek az új elfordulása a következő módon számolható ki a régi elfordulásból
+és a szögsebességből:
+$
+  R(t + Delta t) = (Delta t dot omega(t)^*) dot R(t),\
+  "ahol" quad omega(t)^* = mat(
+    0, -omega(t)_z, omega(t)_y;
+    omega(t)_z, 0, -omega(t)_x;
+    -omega(t)_y, omega(t)_x, 0
+  ) #[@baraff1]
+$
+
+Míg a mozgásnál a lendületmegmaradás általában megegyezik a
+sebességmegmaradással, a forgásnál a perdületmegmaradás nem egyezik meg a
+szögsebesség-megmaradással, mert a tehetetlenségi nyomaték nem konstans. A 
+newtoni mechanika szerint perdületmegmaradás van, ezért a szimulációban érdemes
+a szögsebesség helyett a perdületet tárolni. A perdület a következő képpen áll
+kapcsolatban a szögsebességgel:
+$
+  N(t) = Theta(t) dot omega(t),\
+  "ahol" quad Theta(t) = R(t) dot Theta dot R(t)^(-1) #[@baraff1]
+$
+Egy testnek az alap tehetetlenségi nyomatéka az alakjától és a súlyeloszlásától
+függ. A szimulációban használt testek tehetetlenségi nyomatéka a következő:
+$
+  Theta_"gömb" &= 2/3 m dot r^2\
+  Theta_"téglatest" &= m/12 dot mat(
+    h^2 + d^2, 0, 0;
+    0, d^2 + w^2, 0;
+    0, 0, w^2 + h^2
+  )
+$
+A szimulációban a tehetetlenségi nyomatéknak csak az inverzét használjuk, mert
+mindig perdületből konvertálunk szögsebességbe, ezért a tehetetlenségi
+nyomatéknak az inverzét tárolja.
+
 == Ütközés <ütközés>
 
 = Ütközés detektálás
