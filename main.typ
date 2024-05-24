@@ -46,7 +46,7 @@ ha ütköznek, akkor visszaadni az ütközés paramétereit, két ütközési po
 egy ütközési normált, hogy a @ütközés fejezetben leírt módon frissíthessük a
 sebességeiket.
 
-=== Egyszerű gömb ütközés
+=== Egyszerű gömb ütközés <sphere-collision>
 A szimuláció eleinte csak gömböket támogatott, mert azokra a legegyszerűbb
 kiszámolni, hogy ütköznek-e.
 
@@ -121,6 +121,11 @@ pontot, vagy egy ponton (0 dimenziós szimplex) kívül esik az origó, és akko
 tudjuk, hogy a pont a legközelebbi pont (és részszimplex) az origóhoz. A
 szimuláció @dyn4j-gjk 2 dimenziós algoritmusának a 3 dimenziós generalizációját
 használja.
+
+A GJK könnyen használható gömbileg kiterjesztett testekre, például egy gömbre
+vagy kapszulára, hiszen a két test legközelebbi pojtna adott és sugara adott,
+innentől a @sphere-collision fejezetben írt módon lehet kiszámolni, hogy a két
+test ütközik-e, és ha igen, akkor mik az ütközési paramétereik.
 
 === EPA
 
