@@ -72,7 +72,35 @@ lehet, hogy csak a pároknak egy kis részét dobjuk el.
     ha rossz tengelyt választunk ki, akkor nem segít sokat az algoritmus.
   ]
 )
-=== 3 axis sort and sweep
+
+=== Sort and sweep mindhárom tengely szerint
+Ha az előbb említett algoritmust mindhárom tengely mentén futtatnánk, akkor az
+AABB-k szerint tökéletes szűrést kapnánk. Az algoritmust háromszor futtatni nem
+nehéz, de a három lefutás eredményének kombinációja annál inkább. Egy lefutásból
+az eredmény lista sajnos $n^2$-el arányos méretű, ezeknek a kombinációja nagyon
+lassú lenne, ezért az algoritmusokat külön futtatni nem érdemes.
+
+Egy másik megoldás lehetne, hogy az algoritmusok eredményeit nem külön helyre
+gyűjtük, hanem egy helyre, és akkor nem kell az eredményeket utólag
+kombinánlunk. Erre a következő algoritmus használható:
++ Adott egy $n times n$-es mátrix $0$ értékekkel feltöltve.
++ Futtatjuk a sort and sweep-et az első tengely szerint, és az átfedő
+  intervallumokhoz $1$ értéket írunk a mátrixba.
++ Futtatjuk a sort and sweep-et a második tengely szerint, és az átfedő
+  intervallumoknál ha $1$ van a mátrixban, akkor $2$-t írunk.
++ Futtatjuk a sort and sweep-et a harmadik tengely szerint, és az átfedő
+  intervallumoknál ha $2$ van a mátrixban, akkor kimentjük egy listába a párt.
+Ez az algoritmus jó is lehetne, de a mátrixot vagy minden futtatáskor újra le
+kell foglalni, vagy a futtatás után helyre kell állítani. A helyreállítást úgy
+lehet megoldani, hogy az első tengely szerint kimentjük, hogy hova írtunk a
+mátrixban és a futás után $0$-t írunk az elmentett helyekre. Sajnos a
+helyreállítás költsége megegyezik a sort and sweep költségével, és ehhez még
+hozzá jön, hogy a sort and sweep-et háromszor kellett futtatni. Ugyan az
+algoritmus megspórolta nekünk az AABB metszet ellenőrzést, de cserébe 4
+sort and sweep-nyi (3 a három tegelyhez + 1 a helyreállítás) iterációt kellett
+végrehajtani, ami lassabb, mint az egy tengely menti sort and sweep és az AABB
+ellenőrzés.
+
 === R-Tree
 
 == Narrow phase
