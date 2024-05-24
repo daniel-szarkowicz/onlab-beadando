@@ -1,4 +1,9 @@
 #let todo = text.with(red)
+#let todoImage(content) = rect(width: 5cm, height: 5cm, stroke: red)[
+  #v(1fr)
+  #todo(content)
+  #v(1fr)
+]
 
 #let template(
   title: [Cím],
