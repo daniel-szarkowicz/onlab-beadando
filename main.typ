@@ -39,6 +39,35 @@ Ennek az előnyeiről bővebben az @ütközés fejezetben fogok írni.
 = Ütközés detektálás
 Most már kész van a fizikai modell, de még nem tudnak egymással ütközni a
 testek, ehhez egy ütközés detektáló algoritmus fog kelleni.
+
+== Narrow phase
+A Narrow phase algoritmusok feladata megvizsgálni, hogy két test ütközik-e, és
+ha ütköznek, akkor visszaadni az ütközés paramétereit, két ütközési pontot és
+egy ütközési normált, hogy a @ütközés fejezetben leírt módon frissíthessük a
+sebességeiket.
+
+=== Egyszerű gömb ütközés
+A szimuláció eleinte csak gömböket támogatott, mert azokra a legegyszerűbb
+kiszámolni, hogy ütköznek-e.
+
+Két gömb akkor ütközik, ha a középpontjaik távolsága kisebb, mint a sugaraik
+összege:
+$
+  |bold(c_1) - bold(c_2)| < r_1 + r_2
+$
+Ha ütköznek, akkor az ütközési normál:
+$
+  bold(n) = (bold(c_1) - bold(c_2))/(|bold(c_1) - bold(c_2)|)
+$
+és az ütközési pontok:
+$
+  bold(p_1) = bold(c_1) - r_1 bold(n)\
+  bold(p_2) = bold(c_2) + r_2 bold(n)
+$
+
+=== GJK
+=== EPA
+
 == Broad phase
 Az összes pár megvizsgálása $O(n^2)$ lenne, ami nagyon lassú. Szerencsére
 a legtöbb test nem ütközik, ezért egy megfelelő heurisztikával sokat lehet
@@ -126,11 +155,6 @@ akkor újra beilleszti a fába, hátha talál jobb helyet.
 
 Az STR @str és az OMT @omt nem egyesével építi fel a fát, hanem egyszerre
 dolgozik az összes adattal, így közel tökéletes fákat tudnak felépíteni.
-
-== Narrow phase
-=== Egyszerű gömb ütközés
-=== GJK
-=== EPA
 
 #heading(level: 1)[Árnyék szimuláció]
 = Percentage closer filtering
