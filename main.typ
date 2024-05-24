@@ -1,4 +1,4 @@
-#import "templ.typ": template, todo, todoImage
+#import "templ.typ": template, todo, todo_image
 
 #show: template.with(
   title: [Rigid body és árnyék szimuláció],
@@ -79,7 +79,7 @@ használnak. Az AABB-k olyan téglatestek, amik tartalmazzák az az egész teste
 az oldalai párhuzamosak a koordinátarendszer tengelyeivel.
 
 #figure(
-  todoImage[AABB kép],
+  todo_image[AABB kép],
   caption: [Egy #todo[TODO]-nak az AABB-je.]
 )
 
@@ -95,7 +95,7 @@ mielőtt a tényletes ütközés detektálás algoritmust futtatnánk. Az algori
 sokat számíthat a megfelelő tengely kiválasztása, rossz tengely megválasztásakor
 lehet, hogy csak a pároknak egy kis részét dobjuk el.
 #figure(
-  todoImage[Sort and sweep intervallumok],
+  todo_image[Sort and sweep intervallumok],
   caption: [
     A sort and sweep algoritmus intervallumai az egyik tengelyen. Látszik, hogy
     ha rossz tengelyt választunk ki, akkor nem segít sokat az algoritmus.
@@ -143,7 +143,7 @@ kiszámítása, ha egy csúcs megtelt. A szimuláció a beillesztéshez a legkis
 térfogat növekedést választna, a vágáshoz a Quadratic splitet @rstar használ.
 
 #figure(
-  todoImage[R-Tree],
+  todo_image[R-Tree],
   caption: [Az R-Tree]
 )
 
