@@ -10,12 +10,13 @@
   subtitle: [Alcím],
   author: [Mézga Géza],
   consulent: [Gézga Méza],
+  date: [#datetime.today().display()],
   body
 ) = {
   set text(font: "New Computer Modern", lang: "hu")
   set heading(numbering: "1.")
   set page(paper: "a4", margin: 2.5cm, numbering: "1")
-  set outline(indent: true)
+  set outline(indent: auto)
   set ref(supplement: none)
 
   show outline.entry.where(level: 1): it => strong[
@@ -39,7 +40,7 @@
 
   page(numbering: none)[
     #align(center)[
-      #image("BMElogo.png", width: 40%)\
+      #image("bme_logo_nagy.svg", width: 40%)\
       *Budapesti Műszaki és Gazdaságtudományi Egyetem*\
       Villamosmérnöki és Informatikai Kar\
       Irányítástechnika és Informatika Tanszék
@@ -59,7 +60,7 @@
         ]
       )
       #v(1fr)
-      #datetime.today().display()
+      #date
     ]
   ]
   counter(page).update(1)
