@@ -182,6 +182,10 @@ $
   J_s = min(|J_s^*|, |J_n| dot mu) dot hat(v)_(l r, s)
 $
 
+A súrlódást külön lehet bontani tapadási és csúszási súrlódásra. Ilyenkor ha
+$|J_s^*|$ nagyobb, mint a tapadási súrlódás maximális nagysága, akkor a csúszási
+súrlódás nagyságát használjuk a súrlódási impulzus nagyságaként.
+
 = Ütközés detektálás
 Most már kész van a fizikai modell, de még nem tudnak egymással ütközni a
 testek, ehhez egy ütközés detektáló algoritmus fog kelleni.
