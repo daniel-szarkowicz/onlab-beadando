@@ -24,7 +24,7 @@
   show outline.entry.where(level: 1): it => strong[
     #v(0.5em)
     #link(it.element.location(), it.body)
-    #box(width: 1fr, h(1fr))
+    #h(1fr)
     #link(it.element.location(), it.page)
   ]
 
