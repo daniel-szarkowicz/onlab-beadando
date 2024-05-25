@@ -56,7 +56,7 @@ newtoni mechanika szerint perdületmegmaradás van, ezért a szimulációban ér
 a szögsebesség helyett a perdületet tárolni. A perdület a következő képpen áll
 kapcsolatban a szögsebességgel:
 $
-  N(t) = Theta(t) dot omega(t),\
+  L(t) = Theta(t) dot omega(t),\
   "ahol" quad Theta(t) = R(t) dot Theta dot R(t)^(-1) #[@baraff1]
 $
 Egy testnek az alap tehetetlenségi nyomatéka az alakjától és a súlyeloszlásától
@@ -74,6 +74,32 @@ mindig perdületből konvertálunk szögsebességbe, ezért a tehetetlenségi
 nyomatéknak az inverzét tárolja.
 
 == Ütközés <ütközés>
+
+=== Impulzus és szögimpulzus
+A szimulációban a testek nem deformálódhatnak és nem metszhetik egymást, ezért
+az ütközésnek egy pillanatnyi eseménynek kell lennie. Mivel az erő és a
+forgatónyomaték $0$ idő alatt nem tudnak változást elérni, ezért helyettük
+impulzusokat és szögimpulzusokat kell használni.
+
+A impulzus kifejezhető úgy, mint egy erő, ami egy kicsi idő alatt hat:
+$
+  J = F dot Delta t
+$
+Ha az impulzus egy $x_J$ pontban hat a testre, akkor a szögimpulzus:
+$
+  M = (x_J - x(t)) times F, quad "a forgatónyomaték"\
+  Delta L = M dot Delta t = (x_F - x(t)) times F dot Delta t
+    = (x_J - x(t)) times J
+$
+
+Tehát, ha egy testre egy $J$ impulzus hat egy $x_J$ pontban, akkor a test
+lendülete és perdülete a következő módon változik meg:
+$
+  p'(t) = p(t) + J\
+  L'(t) = L(t) + (x_J - x(t)) times J
+$
+
+=== Lokális sebesség és lokális tehetetlenség
 
 = Ütközés detektálás
 Most már kész van a fizikai modell, de még nem tudnak egymással ütközni a
