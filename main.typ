@@ -461,7 +461,18 @@ együtt használható, a PCF-el és az ESM-el is.
 )
 
 = Exponential Shadow Maps (ESM)
+Az ESM @esm úgy szeretne javítani az árnyékok minőségén, hogy a filterezési
+lépést a PCF-el ellentétben a kirajzolás előtt végzi el a teljes textúrára.
+Ehhez a mélységadatot nem lineárisan, hanem exponenciálisan tárolja és
+az összehasonlítás helyett egy másik exponenciális számmal szorozza össze
+a textúrából olvasott értéket. Ha a szorzás eredménye $0$-hoz közeli, akkor
+árnyék van, ha $1$-hez közeli, akkor nincs árnyék.
+
+Sajnos előfordulhat, hogy az exponenciálisban szakadás van és az árnyék hibásan
+jelenik meg. Ez a probléma úgy orvosolható, hogy ha a szorzás eredménye $1$-nél
+nagyobb, akkor PCF-et használunk az árnyék kiszámolására. A szimulációban nem
+sikerült ezt a hibajavítási lépést implementálni.
 
 #chapter(numbering: none)[Eredmények]
 
-#bibliography("references.yml", full: true)
+#bibliography("references.yml")
