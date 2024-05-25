@@ -7,8 +7,11 @@
   consulent: [Fridvalszky András],
 )
 
+#let chapter = heading.with(level: 1)
 
-#heading(level: 1)[Merevtest-szimuláció]
+#chapter(numbering: none)[Bevezető]
+
+#chapter[Merevtest-szimuláció]
 = Fizikai modell
 A merevtest-szimulációnak a newtoni mechanika szabályai szerint kell működnie.
 
@@ -399,7 +402,7 @@ akkor újra beilleszti a fába, hátha talál jobb helyet.
 Az STR @str és az OMT @omt nem egyesével építi fel a fát, hanem egyszerre
 dolgozik az összes adattal, így közel tökéletes fákat tudnak felépíteni.
 
-#heading(level: 1)[Árnyékszimuláció]
+#chapter[Árnyékszimuláció]
 A számítógépes grafikában az egyik legelterjedtebb valós idejű árnyékszimulációs
 módszer a shadow mapping.
 
@@ -441,7 +444,24 @@ Erre ad megoldást @pcf, ahol egy néhány olvasásról megnézzük, hogy árny�
 van-e, és ha az összes olvasás igent vagy nemet válaszol, akkor visszaadja az
 eredményt.
 
-= Cascaded Shadow Maps
-= Exponential Shadow Maps
+= Cascaded Shadow Maps (CSM)
+Egy textúrával nem tudjuk lefedni a megfigyelő látóterét úgy, hogy a közel lévő
+részeknek jó legyen a felbontása. Ezt a CSM @cascaded úgy oldja meg, hogy
+felvágja a látóteret kisebb részekre, és minden részen külön textúrába dolgozik.
+Így a közeli dolgokra sűrűbb a textúra, a távoliakra ritka, de ez nem probléma,
+mert a távoli árnyék kevésbé látható. A CSM sok shadow mapping technikával
+együtt használható, a PCF-el és az ESM-el is.
+
+#figure(
+  todo_image[CSM],
+  caption: [
+    A CSM-el több részre lett osztva a látótér. A #todo[TODO] az egyes textúrák
+    által lefedett terület, a #todo[TODO] a látótér.
+  ]
+)
+
+= Exponential Shadow Maps (ESM)
+
+#chapter(numbering: none)[Eredmények]
 
 #bibliography("references.yml", full: true)
