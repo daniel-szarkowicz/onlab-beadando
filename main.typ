@@ -42,11 +42,11 @@ A testnek az új elfordulása a következő módon számolható ki a régi elfor
 és a szögsebességből:
 $
   R(t + Delta t) = (Delta t dot omega(t)^*) dot R(t),\
-  "ahol" quad omega(t)^* = mat(
+  #[ahol @baraff1 szerint] quad omega(t)^* = mat(
     0, -omega(t)_z, omega(t)_y;
     omega(t)_z, 0, -omega(t)_x;
     -omega(t)_y, omega(t)_x, 0
-  ) #[@baraff1]
+  )
 $
 
 Míg a mozgásnál a lendületmegmaradás általában megegyezik a
@@ -57,7 +57,7 @@ a szögsebesség helyett a perdületet tárolni. A perdület a következő képp
 kapcsolatban a szögsebességgel:
 $
   L(t) = Theta(t) dot omega(t),\
-  "ahol" quad Theta(t) = R(t) dot Theta dot R(t)^(-1) #[@baraff1]
+  #[ahol @baraff1 szerint] quad Theta(t) = R(t) dot Theta dot R(t)^(-1)
 $
 Egy testnek az alap tehetetlenségi nyomatéka az alakjától és a súlyeloszlásától
 függ. A szimulációban használt testek tehetetlenségi nyomatéka a következő:
@@ -100,6 +100,37 @@ $
 $
 
 === Lokális sebesség és lokális tehetetlenség
+
+=== Normál irányú impulzus
+#let vlr = $v_(lr)$
+#let vlr2 = $v'_(lr)$
+#let dvlrn = $Delta v_(lr,n)$
+
+Két test ütközésekor a testek lokális relatív sebességével (#vlr) kell számolni.
+Jelölje az ütközés utáni #{vlr}-t #vlr2.
+
+Például ha két test tökéletesen rugalmasan ütközik, akkor #vlr2 normál irányú
+komponense #vlr a negáltja lesz:
+$
+  vlr2 = vlr - 2n dot (n dot vlr)
+$
+Ha két test tökéletesen rugalmatlanul ütközik, akkor #vlr2 normál irányú
+komponense $0$ lesz:
+$
+  vlr2 = vlr - n dot (n dot vlr)
+$
+Jelölje $epsilon$ az ütközés rugalmasságát. Ha $epsilon = 1$, akkor az ütközés
+töléletesen rugalmas, ha $0$ akkor tökéletesen rugalmatlan. Így a normál irányú
+sebességnek a változása a következő:
+$
+  dvlrn = -(1 + epsilon) dot (n dot vlr)
+$
+Ezt a sebességváltozást a lendületmegmaradás törvénye értelmében egy azonos
+nagyságú, ellentétes irányú impulzus fogja kiváltani a két testen. Az impulzus
+nagysága a testek normál irányú lokális tehetetlenségéből jön ki @baraff2:
+$
+  |J_n| = dvlrn / (T_(1, n)^(-1) + T_(2, n)^(-1))
+$
 
 = Ütközés detektálás
 Most már kész van a fizikai modell, de még nem tudnak egymással ütközni a
