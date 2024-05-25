@@ -19,7 +19,10 @@
   set outline(indent: auto)
   set ref(supplement: none)
 
+  set outline(fill: repeat[#" . "])
+
   show outline.entry.where(level: 1): it => strong[
+    #v(0.5em)
     #link(it.element.location(), it.body)
     #box(width: 1fr, h(1fr))
     #link(it.element.location(), it.page)
@@ -27,14 +30,20 @@
 
   show heading.where(level: 1): it => {
     pagebreak(weak: true)
+    v(2cm)
     if it.numbering != none {
-      text(size: 1.5em)[
+      text(size: 1.25em)[
         #counter(heading).display(it.numbering)
         #it.supplement
       ]
       v(0.5em)
     }
-    text(size: 1.75em)[#it.body]
+    text(size: 1.5em)[#it.body]
+    v(1.5em)
+  }
+
+  show heading: it => {
+    it
     v(0.5em)
   }
 
