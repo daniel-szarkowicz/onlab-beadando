@@ -400,6 +400,31 @@ Az STR @str és az OMT @omt nem egyesével építi fel a fát, hanem egyszerre
 dolgozik az összes adattal, így közel tökéletes fákat tudnak felépíteni.
 
 #heading(level: 1)[Árnyékszimuláció]
+A számítógépes grafikában az egyik legelterjedtebb valós idejű árnyékszimulációs
+módszer a shadow mapping.
+
+A shadow mapping alapja nagyon egyszerű: először kirajzoljuk a világot a fény
+szemszögéből, majd kirajzoljuk a világot a kamera szemszögéből és minden pixelre
+megnézzük, hogy a fényforrás látja-e az adott pixelt. Ehhez a fény
+mélységbufferére és kamera mátrixára lesz szükség. A pixel világkoordinátáját
+transzformáljuk a fény kamera mátrixával, az eredményül kapott $x, y$
+koordinátákon található mélységet lekérdezzük a fény mélységbufferéből és
+összehasonlítjuk a $z$ koordinátával; ha a mélység kisebb, mint a $z$
+koordináta, akkor árnyékban van a pixel, különben nem.
+
+Ezzel az egyszerű implementációval számos probléma van, közülük a
+legrosszabbakra @shadow-mapping egyszerű megoldásokat ad. Viszont van egy
+probléma, amire nincsen egyszerű megoldás: az árnyékok szélei csúnyák. Ennek
+a problémának a megoldására számos trükk született, de mindegyiknek megvan a
+saját problémája. A szimulációban ezek közül három lett kipróbálva.
+#figure(
+  todo_image[Pixelated hard edges],
+  caption: [
+    Az árnyékok szélei pixelesek, az átmenet az árnykos és a fényes rész
+    között hirtelen, ez nem túl realisztikus.
+  ]
+)
+
 = Percentage closer filtering
 = Cascaded shadow maps
 = Exponential shadow maps
