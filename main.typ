@@ -1,16 +1,16 @@
 #import "templ.typ": template, todo, todo_image
 
 #show: template.with(
-  title: [Rigid body és árnyék szimuláció],
+  title: [Merevtest- és árnyékszimuláció],
   subtitle: [Önálló laboratórium],
   author: [Szarkowicz Dániel],
   consulent: [Fridvalszky András],
 )
 
 
-#heading(level: 1)[Rigid body szimuláció]
+#heading(level: 1)[Merevtest-szimuláció]
 = Fizikai modell
-A rigid body szimulációnak a newtoni mechanika szabályai szerint kell működnie.
+A merevtest-szimulációnak a newtoni mechanika szabályai szerint kell működnie.
 
 == Mozgás
 Egy test mozgásának a leírásához a test pozíciójára és sebességére lesz szükség.
@@ -308,7 +308,7 @@ oldalak azon széleit, amelyeket csak az egyik oldalról határolt kitörölt ol
 összekötjük az új ponttal. Ez a bővítés elképzelhető egy konvex burok iteratív
 felépítéseként is.
 
-A szimuláció @dyn4j-gjk 2 dimenziós algoritmusának a 3 dimenziós
+A szimuláció @dyn4j-epa 2 dimenziós algoritmusának a 3 dimenziós
 generalizációját használja.
 
 == Broad phase
@@ -399,7 +399,7 @@ akkor újra beilleszti a fába, hátha talál jobb helyet.
 Az STR @str és az OMT @omt nem egyesével építi fel a fát, hanem egyszerre
 dolgozik az összes adattal, így közel tökéletes fákat tudnak felépíteni.
 
-#heading(level: 1)[Árnyék szimuláció]
+#heading(level: 1)[Árnyékszimuláció]
 = Percentage closer filtering
 = Cascaded shadow maps
 = Exponential shadow maps

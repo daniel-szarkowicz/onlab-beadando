@@ -12,7 +12,7 @@ baraff2:
 
 rstar:
   type: article
-  title: "The R*-tree: An Efficient and Robust AccessMethod for Points and Rectangles+"
+  title: "The R*-tree: An Efficient and Robust Access Method for Points and Rectangles+"
   author: [Norbert Beckmann, Hans-Peterbegel, Ralf Schneider, Bernhard Seeger]
   url: https://infolab.usc.edu/csci599/Fall2001/paper/rstar-tree.pdf
 
