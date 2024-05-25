@@ -215,7 +215,7 @@ $
   bold(p_2) = bold(c_2) + r_2 bold(n)
 $
 
-=== GJK
+=== Gilbert-Johnson-Keerthi (GJK)
 Egy elterjedt ütközés detektálási algoritmus a Gilbert-Johnson-Keerthi @gjk
 algoritmus, ami tetszőleges convex testek távolságát tudja meghatározni, ha a
 testekre definiálva van a support function. A support functionnek egy adott
@@ -277,13 +277,13 @@ vagy kapszulára, hiszen a két test legközelebbi pojtna adott és sugara adott
 innentől a @sphere-collision fejezetben írt módon lehet kiszámolni, hogy a két
 test ütközik-e, és ha igen, akkor mik az ütközési paramétereik.
 
-=== EPA
+=== Expanding Polytope Algorithm (EPA)
 A GJK egyik hiányossága, hogy ha két test ütközik, akkor csak annyit mond, hogy
-ütköznek, nem ad nekünk használható ütközési paramétereket. Az expanding
-polytope algorithm (EPA) úgy segít, hogy a GJK-ból kapott szimplexet iteratívan
-bővíti újabb pontokkal, amíg megtalálja az átfedő terület szélességét. Az EPA
-a GJK-ban használt legközelebbi pont algoritmust használja, de nem az egész
-politópon futtatja, hanem csak a politóp oldalait alkotó szimplexeken.
+ütköznek, nem ad nekünk használható ütközési paramétereket. Az EPA úgy segít,
+hogy a GJK-ból kapott szimplexet iteratívan bővíti újabb pontokkal, amíg
+megtalálja az átfedő terület szélességét. Az EPA a GJK-ban használt legközelebbi
+pont algoritmust használja, de nem az egész politópon futtatja, hanem csak a
+politóp oldalait alkotó szimplexeken.
 
 Az EPA a Minkowski különbségnek az origóhoz legközelebbi felszíni pontját keresi
 meg. Ezt úgy éri el, hogy a politóp legközelebbi pontjának irányában kér egy új
@@ -420,13 +420,28 @@ saját problémája. A szimulációban ezek közül három lett kipróbálva.
 #figure(
   todo_image[Pixelated hard edges],
   caption: [
-    Az árnyékok szélei pixelesek, az átmenet az árnykos és a fényes rész
+    Az árnyékok szélei pixelesek, az átmenet az árnyékos és a fényes rész
     között hirtelen, ez nem túl realisztikus.
   ]
 )
 
-= Percentage closer filtering
-= Cascaded shadow maps
-= Exponential shadow maps
+= Percentage Closer Filtering (PCF)
+Az egyik elterjedt megoldás a PCF. Egy pixel árnyalásakor nem csak egy értéket
+olvas ki a mélységbufferből, hanem a környékről többet. Ezeket az értékeket
+mind összehasonlítja a pixel ménységével és kiszámolja, hogy milyen erős
+árnyékban van a pont.
+
+#figure(
+  todo_image[PCF],
+  caption: [A PCF szebb árnyékokat ad.]
+)
+
+A PCF egyik hátránya, hogy nagyon sok textúraolvasási műveletet kell végeznie.
+Erre ad megoldást @pcf, ahol egy néhány olvasásról megnézzük, hogy árnyékban
+van-e, és ha az összes olvasás igent vagy nemet válaszol, akkor visszaadja az
+eredményt.
+
+= Cascaded Shadow Maps
+= Exponential Shadow Maps
 
 #bibliography("references.yml", full: true)
