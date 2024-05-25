@@ -100,6 +100,28 @@ $
 $
 
 === Lokális sebesség és lokális tehetetlenség
+Az ütközési számításokhoz szükséges lesz a testek lokális sebességére egy adott
+$x_J$ pontban. Ez a sebességből és a szögsebességből származó kerületi sebesség
+összege:
+$
+  v_l = v(t) + omega(t) times (x_J - x(t)) =
+    p(t) / m + (I^(-1)(t) dot L(t)) times (x_J - x(t))
+$
+
+Szükség lesz még a testek lokális tehetetlenségére. Ez a test tömegéből és
+tehetetlenségi nyomatékából származó ellenállás a lokális sebesség adott irányú
+változására. Ennek az inverzét így számoljuk ki @baraff2 egy adott irányban az
+$x_J$ pontban:
+
+#let big(x) = $lr(size: #150%, #x)$
+
+$
+  T^(-1)(bold(u)) = bold(u) dot big([
+    bold(u) / m +
+    big((I^(-1)(t) dot big([(x_J - x(t)) times bold(u)])))
+    times (x_J - x(t))
+  ])
+$
 
 === Normál irányú impulzus
 #let vlr = $v_(lr)$
@@ -107,10 +129,13 @@ $
 #let dvlrn = $Delta v_(lr,n)$
 
 Két test ütközésekor a testek lokális relatív sebességével (#vlr) kell számolni.
-Jelölje az ütközés utáni #{vlr}-t #vlr2.
+$
+  vlr = v_(1,l) - v_(2,l)
+$
+Jelölje az ütközés utáni lokális relatív sebességet #vlr2.
 
-Például ha két test tökéletesen rugalmasan ütközik, akkor #vlr2 normál irányú
-komponense #vlr a negáltja lesz:
+Ha két test tökéletesen rugalmasan ütközik, akkor #vlr2 normál irányú
+komponense #vlr normál irányú komponensének a negáltja lesz:
 $
   vlr2 = vlr - 2n dot (n dot vlr)
 $
@@ -129,7 +154,7 @@ Ezt a sebességváltozást a lendületmegmaradás törvénye értelmében egy az
 nagyságú, ellentétes irányú impulzus fogja kiváltani a két testen. Az impulzus
 nagysága a testek normál irányú lokális tehetetlenségéből jön ki @baraff2:
 $
-  |J_n| = dvlrn / (T_(1, n)^(-1) + T_(2, n)^(-1))
+  |J_n| = dvlrn / (T_1^(-1)(n) + T_2^(-1)(n))
 $
 
 = Ütközés detektálás
