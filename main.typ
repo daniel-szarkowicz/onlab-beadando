@@ -8,9 +8,25 @@
   consulent: [Fridvalszky András],
 )
 
-// #chapter(numbering: none)[Bevezető]
-// A realisztikus, valós idejű szimulációknak egyre fontosabb szerepe van a
-// videójátékok terén. Az élethű szimulációk növelik a játékok immerzióját és 
+#chapter(numbering: none)[Bevezető]
+A realisztikus, valós idejű szimulációknak egyre fontosabb szerepe van a
+számítógépes grafika terén. Az szimulációk új lehetőségeket nyitnak a
+videojátékok, animációk és tervezőprogramok területén.
+
+Az önálló laboratóriumom alkalmából különböző merevtest- és árnyékszimulációs
+technikákat próbáltam ki.
+
+A merevtest-szimulációnak a célja a mindennapi fizikai objektumok egymásra
+hasásának szimulációja. Ehhez először fel kell építeni a fizikai modellt, ami
+szerint viselkedni fog a rendszer, majd be kell vezetni egy algoritmust, amely
+megmondja, hogy két test milyen kapcsolatban áll egymással. Végül optimalizálási
+algoritmusokkal kell gyorsítani a szimulációt, hogy akár több ezer testnek az
+interakcióit tudjuk egyszerre szimulálni.
+
+Az árnyékszimuláció célja az árnyékok szimulációja/* duh */. Ehhez először
+bevezetünk egy metódust, amellyel meghatározzuk, hogy egy terület árnyékban
+van-e, majd további algoritmusokat próbálunk ki, amelyek javítják az
+árnyékok minőségét.
 
 #chapter[Merevtest-szimuláció]
 = Fizikai modell
