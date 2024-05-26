@@ -1,4 +1,4 @@
-#import "templ.typ": template, todo, todo_image
+#import "templ.typ": template, todo, todo_image, chapter
 
 #show: template.with(
   title: [Merevtest- és árnyékszimuláció],
@@ -7,9 +7,9 @@
   consulent: [Fridvalszky András],
 )
 
-#let chapter = heading.with(level: 1)
-
-#chapter(numbering: none)[Bevezető]
+// #chapter(numbering: none)[Bevezető]
+// A realisztikus, valós idejű szimulációknak egyre fontosabb szerepe van a
+// videójátékok terén. Az élethű szimulációk növelik a játékok immerzióját és 
 
 #chapter[Merevtest-szimuláció]
 = Fizikai modell
@@ -27,7 +27,7 @@ $
   x(t + Delta t) = x(t) + Delta t dot v(t)
 $
 Ezt a módszert Euler integrációnak hívjuk. Léteznek pontosabb számítási
-módszerek is, példáuk a Runge-Kutta metódus.
+módszerek is, például a Runge-Kutta metódus.
 
 A szimuláció a test sebessége helyett a test lendületét tárolja, ez a következő
 módon áll kapcsolatban a sebességgel:
@@ -266,14 +266,14 @@ is meg kell vizsgálni, ami nem csak azért probléma, mert több számítást v
 de azért is, mert így másolni kell a szimplex adatait, amit nem lehet
 kioptimalizálni.
 
-A második implementáció a teret részszimplexenként két részre osztotja és
+A második implementáció a teret részszimplexenként két részre osztja és
 megnézi, hogy a részszimplexen belül vagy kívül esik-e az origó. Előbb vagy
 utóbb egy néhány részszimplex vagy körbe fogja az origót, és akkor tudjuk, hogy
 a részszimplexek által alkotott szimplex tartalmazza az origóhoz a legközelebbi
 pontot, vagy egy ponton (0 dimenziós szimplex) kívül esik az origó, és akkor
 tudjuk, hogy a pont a legközelebbi pont (és részszimplex) az origóhoz. A
-szimuláció @dyn4j-gjk 2 dimenziós algoritmusának a 3 dimenziós generalizációját
-használja.
+szimuláció @dyn4j-gjk által bemutatott 2 dimenziós algoritmusnak egy 3 dimenziós
+generalizációját használja.
 
 A GJK könnyen használható gömbileg kiterjesztett testekre, például egy gömbre
 vagy kapszulára, hiszen a két test legközelebbi pojtna adott és sugara adott,
@@ -311,8 +311,8 @@ oldalak azon széleit, amelyeket csak az egyik oldalról határolt kitörölt ol
 összekötjük az új ponttal. Ez a bővítés elképzelhető egy konvex burok iteratív
 felépítéseként is.
 
-A szimuláció @dyn4j-epa 2 dimenziós algoritmusának a 3 dimenziós
-generalizációját használja.
+A szimuláció @dyn4j-epa által bemutatott 2 dimenziós algoritmusnak egy 3
+dimenziós generalizációját használja.
 
 == Broad phase
 Az összes pár megvizsgálása $O(n^2)$ lenne, ami nagyon lassú. Szerencsére
@@ -471,8 +471,70 @@ a textúrából olvasott értéket. Ha a szorzás eredménye $0$-hoz közeli, ak
 Sajnos előfordulhat, hogy az exponenciálisban szakadás van és az árnyék hibásan
 jelenik meg. Ez a probléma úgy orvosolható, hogy ha a szorzás eredménye $1$-nél
 nagyobb, akkor PCF-et használunk az árnyék kiszámolására. A szimulációban nem
-sikerült ezt a hibajavítási lépést implementálni.
+sikerült ezt a hibajavítási lépést helyesen implementálni.
+
+#figure(
+  grid(columns: 2, gutter: 10pt,
+    todo_image[Szép ESM egy sík felületen],
+    todo_image[Hibás ESM egy zajos felülelen],
+  ),
+  caption: [
+    Az ESM ad mindig szép árnyékokat, ilyenkor még a programban implementált
+    javítás sem segít.
+  ]
+)
+
+#chapter(numbering: none)[Implementáció]
+
+A szimuláció Rust-ban és OpenGL-ben lett implementálva.
+
+A program jelenleg egy szálon fut, de az ütközés detektálás (a program leglassab
+része) könnyen átírható több szálra, illetve tervben van a rajzolás és a fizika
+szálainak szétválasztása, hogy a kettő ne befolyásolja egymást.
+
+Amennyiben a fizika nem képes valós időben futni, lehetőség van a testek
+állapotának felvételére és visszajátszására. A rajzolásnál erre nincs lehetőség.
+
+A szimuláció jelenleg csak gömböket és téglatesteket támogat, de a GJK-nak és az
+EPA-nak köszönhetően könnyű lesz egyéb konvex alakzatok támogatása is. Tervben
+van több részből álló testek szimulálása is, először csak statikusan elhelyezett
+résztestekkel (ez szükséges a konkáv testek szimulációjához), de később akár
+joint-okkal is.
+
+A programban használt külső könyvtárak:
+- *`anyhow`:* hibakezelést segítő dinamikus hiba típus
+- *`bytemuck`:* byte szintű castolás a GPU-val való kommunikációhoz
+- *`egui, egui_glow`:* egy immediate mode GUI keretrendszer
+- *`glow`:* OpenGL absztrakció különböző implementációk felett
+- *`glutin, glutin_winit`:* OpenGL betöltő
+- *`nalgebra`:* lineáris algebra könyvtár
+- *`rand`:* véletlen szám generálás
+- *`raw-window-handle`:* absztrakciós réteg az ablakkészítő és a grafikus
+  könyvtárak közé
+- *`smallvec`:* stack allokált vektor implementáció
+- *`winit`:* multiplatform ablakkészítő könyvtár
 
 #chapter(numbering: none)[Eredmények]
+
+A program több, mint 1000 kockát képes valós időben szimulálni egy
+_AMD Ryzen 5 4500U_ processzoron.
+
+#figure(
+  image("wrecking_ball.png", width: 90%),
+  caption: [
+    A nagy kocka nekiütközik egy 1125 kis kockából álló falnak. A program még az
+    ütközés pillanatában sem esik 60 fps alá.
+  ]
+)
+
+#figure(
+  image("carpet_bomb.png", width: 90%),
+  caption: [
+    Egy több, mint 10000 kockából álló színtér. Jelenleg esélytelen valós időben
+    futtatni, de remélhetőleg további optimalizációval és több szálon való
+    futtatással a 30 fps elérhető lesz. Amíg ez nem történik meg, addig a
+    program felvétel funkcióját lehet használni.
+  ]
+)
 
 #bibliography("references.yml")

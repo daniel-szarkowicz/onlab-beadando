@@ -5,6 +5,8 @@
   #v(1fr)
 ]
 
+#let chapter = heading.with(level: 1)
+
 #let template(
   title: [Cím],
   subtitle: [Alcím],
