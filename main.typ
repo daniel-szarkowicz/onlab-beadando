@@ -195,11 +195,11 @@ $
 A sebesség $0$-ra állításához szükséges impulzus nagyságát a következő módon
 kaphatjuk meg:
 $
-  |J_s^*| = (-|v_(l r, s)|)/(T_1^(-1)(hat(v)_(l r, s)) + T_2^(-1)(hat(v)_(l r, s)))
+  |J_s^+| = (-|v_(l r, s)|)/(T_1^(-1)(hat(v)_(l r, s)) + T_2^(-1)(hat(v)_(l r, s)))
 $
 Tehát a súrlódási impulzus:
 $
-  J_s = min(|J_s^*|, |J_n| dot mu) dot hat(v)_(l r, s)
+  J_s = min(|J_s^+|, |J_n| dot mu) dot hat(v)_(l r, s)
 $
 
 A súrlódást külön lehet bontani tapadási és csúszási súrlódásra. Ilyenkor ha
