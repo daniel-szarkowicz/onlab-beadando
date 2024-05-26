@@ -325,8 +325,8 @@ használnak. Az AABB-k olyan téglatestek, amik tartalmazzák az az egész teste
 az oldalai párhuzamosak a koordinátarendszer tengelyeivel.
 
 #figure(
-  todo_image[AABB kép],
-  caption: [Egy #todo[TODO]-nak az AABB-je.]
+  image("sphere_aabb_cropped.png", width: 6cm),
+  caption: [Egy gömbnek az AABB-je.]
 )
 
 === Sort and sweep
@@ -389,8 +389,11 @@ kiszámítása, ha egy csúcs megtelt. A szimuláció a beillesztéshez a legkis
 térfogat növekedést választna, a vágáshoz a Quadratic splitet @rstar használ.
 
 #figure(
-  todo_image[R-Tree],
-  caption: [Az R-Tree]
+  image("rtree_cropped.png", width: 6cm),
+  caption: [
+    Egy 3 dimenziós R-Tree kettő szintje. Látható, hogy néha átfedik egymást
+    a csomópontok (piros AABB-k). Az átfedéseket érdemes minimalizálni.
+  ]
 )
 
 Az R-Tree-k felépítéséhez és karbantartásához számos algoritmus jött létre.
@@ -421,7 +424,7 @@ probléma, amire nincsen egyszerű megoldás: az árnyékok szélei csúnyák. E
 a problémának a megoldására számos trükk született, de mindegyiknek megvan a
 saját problémája. A szimulációban ezek közül három lett kipróbálva.
 #figure(
-  todo_image[Pixelated hard edges],
+  image("pixelated_edges_cropped.png", width: 6cm),
   caption: [
     Az árnyékok szélei pixelesek, az átmenet az árnyékos és a fényes rész
     között hirtelen, ez nem túl realisztikus.
@@ -435,8 +438,10 @@ mind összehasonlítja a pixel ménységével és kiszámolja, hogy milyen erős
 árnyékban van a pont.
 
 #figure(
-  todo_image[PCF],
-  caption: [A PCF szebb árnyékokat ad.]
+  image("pcf_cropped.png", width: 6cm),
+  caption: [
+    A PCF szebb árnyékokat ad. Az árnyék minősége tovább javítható jitterel @pcf.
+  ]
 )
 
 A PCF egyik hátránya, hogy nagyon sok textúraolvasási műveletet kell végeznie.
@@ -453,10 +458,11 @@ mert a távoli árnyék kevésbé látható. A CSM sok shadow mapping technikáv
 együtt használható, a PCF-el és az ESM-el is.
 
 #figure(
-  todo_image[CSM],
+  image("csm.png", width: 90%),
   caption: [
-    A CSM-el több részre lett osztva a látótér. A #todo[TODO] az egyes textúrák
-    által lefedett terület, a #todo[TODO] a látótér.
+    A CSM-el több részre lett osztva a látótér. A zöld csonka gúlák a látótér
+    egyre távolodó részei, a piros téglatestek a látótér részeihez tartozó
+    textúrák által lefedett területek.
   ]
 )
 
@@ -468,19 +474,24 @@ az összehasonlítás helyett egy másik exponenciális számmal szorozza össze
 a textúrából olvasott értéket. Ha a szorzás eredménye $0$-hoz közeli, akkor
 árnyék van, ha $1$-hez közeli, akkor nincs árnyék.
 
+#figure(
+  image("esm_good.png", width: 90%),
+  caption: [
+    Amikor az ESM működik, akkor a PCF-nél szebb árnyékokat csinál egyetlen
+    textúra olvasásból.
+  ]
+)
+
 Sajnos előfordulhat, hogy az exponenciálisban szakadás van és az árnyék hibásan
 jelenik meg. Ez a probléma úgy orvosolható, hogy ha a szorzás eredménye $1$-nél
 nagyobb, akkor PCF-et használunk az árnyék kiszámolására. A szimulációban nem
 sikerült ezt a hibajavítási lépést helyesen implementálni.
 
 #figure(
-  grid(columns: 2, gutter: 10pt,
-    todo_image[Szép ESM egy sík felületen],
-    todo_image[Hibás ESM egy zajos felülelen],
-  ),
+  image("esm_bad.png", width: 90%),
   caption: [
-    Az ESM ad mindig szép árnyékokat, ilyenkor még a programban implementált
-    javítás sem segít.
+    Amikor az ESM nem működik, akkor csúnya artifactok alakulnak ki az árnyékok
+    szélein.
   ]
 )
 
@@ -505,7 +516,7 @@ A programban használt külső könyvtárak:
 - *`anyhow`:* hibakezelést segítő dinamikus hiba típus
 - *`bytemuck`:* byte szintű castolás a GPU-val való kommunikációhoz
 - *`egui, egui_glow`:* egy immediate mode GUI keretrendszer
-- *`glow`:* OpenGL absztrakció különböző implementációk felett
+- *`glow`:* vékony OpenGL absztrakció különböző implementációk felett
 - *`glutin, glutin_winit`:* OpenGL betöltő
 - *`nalgebra`:* lineáris algebra könyvtár
 - *`rand`:* véletlen szám generálás
