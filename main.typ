@@ -11,13 +11,13 @@
 #chapter(numbering: none)[Bevezető]
 A realisztikus, valós idejű szimulációknak egyre fontosabb szerepe van a
 számítógépes grafika terén. Az szimulációk új lehetőségeket nyitnak a
-videojátékok, animációk és tervezőprogramok területén.
+videójátékok, animációk és tervezőprogramok területén.
 
 Az önálló laboratóriumom alkalmából különböző merevtest- és árnyékszimulációs
 technikákat próbáltam ki.
 
 A merevtest-szimulációnak a célja a mindennapi fizikai objektumok egymásra
-hasásának szimulációja. Ehhez először fel kell építeni a fizikai modellt, ami
+hatásának szimulációja. Ehhez először fel kell építeni a fizikai modellt, ami
 szerint viselkedni fog a rendszer, majd be kell vezetni egy algoritmust, amely
 megmondja, hogy két test milyen kapcsolatban áll egymással. Végül optimalizálási
 algoritmusokkal kell gyorsítani a szimulációt, hogy akár több ezer testnek az
@@ -39,7 +39,7 @@ $
   v(t) = d/(d t) x(t)
 $
 A szimuláció állapota időben diszkrét módon frissül. Az új állapotot a következő
-módon számulhatjuk ki az előző állapotból:
+módon számolhatjuk ki az előző állapotból:
 $
   x(t + Delta t) = x(t) + Delta t dot v(t)
 $
@@ -73,7 +73,7 @@ Míg a mozgásnál a lendületmegmaradás általában megegyezik a
 sebességmegmaradással, a forgásnál a perdületmegmaradás nem egyezik meg a
 szögsebesség-megmaradással, mert a tehetetlenségi nyomaték nem konstans. A 
 newtoni mechanika szerint perdületmegmaradás van, ezért a szimulációban érdemes
-a szögsebesség helyett a perdületet tárolni. A perdület a következő képpen áll
+a szögsebesség helyett a perdületet tárolni. A perdület a következőképpen áll
 kapcsolatban a szögsebességgel:
 $
   L(t) = Theta(t) dot omega(t),\
@@ -165,7 +165,7 @@ $
   vlr2 = vlr - hat(n) dot (hat(n) dot vlr)
 $
 Jelölje $epsilon$ az ütközés rugalmasságát. Ha $epsilon = 1$, akkor az ütközés
-töléletesen rugalmas, ha $0$ akkor tökéletesen rugalmatlan. Így a normál irányú
+tökéletesen rugalmas, ha $0$ akkor tökéletesen rugalmatlan. Így a normál irányú
 sebességnek a változása a következő:
 $
   dvlrn = -(1 + epsilon) dot (hat(n) dot vlr)
@@ -237,7 +237,7 @@ $
 
 === Gilbert-Johnson-Keerthi (GJK)
 Egy elterjedt ütközés detektálási algoritmus a Gilbert-Johnson-Keerthi @gjk
-algoritmus, ami tetszőleges convex testek távolságát tudja meghatározni, ha a
+algoritmus, ami tetszőleges konvex testek távolságát tudja meghatározni, ha a
 testekre definiálva van a support function. A support functionnek egy adott
 irányban kell a test legtávolabbi pontját visszaadni.
 
@@ -305,7 +305,7 @@ ki lehet fejteni a két test legközelebbi pontját is.
     minkowskidiff((-3, 1.7), (-2, 4), drawline: true),
   ),
   caption: [
-    Egy háromszög és egy négyzet minkowski különbsége. Az első képen a két
+    Egy háromszög és egy négyzet Minkowski különbsége. Az első képen a két
     test ütközik, a Minkowski különbségük tartalmazza az origót. A második képen
     a két test nem ütközik, a távolságuk megegyezik a Minkowski különbség és az
     origó távolságával.
@@ -327,7 +327,7 @@ legközelebbi részszimplexét és a legközelebbi pontját, és a legközelebbi
 ponttal ellentétes irányba kérünk a support functiontől egy új pontot, amit
 hozzáadunk a szimplexhez.
 
-Az algoritmus két féle képpen került implementációra.
+Az algoritmus kétféleképpen került implementációra.
 
 Az első implementáció baricentrikus koordinátákkal kereste meg a legközelebbi
 részszimplexet és a legközelebbi pontot. Sajnos a legközelebbi részszimplex
@@ -346,7 +346,7 @@ szimuláció @dyn4j-gjk által bemutatott 2 dimenziós algoritmusnak egy 3 dimen
 generalizációját használja.
 
 A GJK könnyen használható gömbileg kiterjesztett testekre, például egy gömbre
-vagy kapszulára, hiszen a két test legközelebbi pojtna adott és sugara adott,
+vagy kapszulára, hiszen a két test legközelebbi pontja adott és sugara adott,
 innentől a @sphere-collision fejezetben írt módon lehet kiszámolni, hogy a két
 test ütközik-e, és ha igen, akkor mik az ütközési paramétereik.
 
@@ -360,7 +360,7 @@ politóp oldalait alkotó szimplexeken.
 
 Az EPA a Minkowski különbségnek az origóhoz legközelebbi felszíni pontját keresi
 meg. Ezt úgy éri el, hogy a politóp legközelebbi pontjának irányában kér egy új
-pontotk a különbség support functionjétől, ha talált távolabbi pontot, akkor
+pontot a különbség support functionjétől, ha talált távolabbi pontot, akkor
 kiegészíti a politópot az új ponttal, ha nem talált távolabbi pontot, akkor
 megtaláltuk a Minkowski különbség legközelebbi felszíni pontját.
 
@@ -392,7 +392,7 @@ a teszteknek egy jelentős részét és így csak a párok egy kis hányadát ke
 megvizsgálni. Ezek az algoritmusok általában csak egyszerű alakzatokon tudnak
 dolgozni, a következő algoritmusok axis-aligned bounding boxokat (AABB)
 használnak. Az AABB-k olyan téglatestek, amik tartalmazzák az az egész testet és
-az oldalai párhuzamosak a koordinátarendszer tengelyeivel.
+az oldalai párhuzamosak a koordináta-rendszer tengelyeivel.
 
 #figure(
   image("sphere_aabb_cropped.png", width: 6cm),
@@ -407,7 +407,7 @@ kigyűjti minden AABB-nek az elejét és a végét a kiválasztott tengely szeri
 rendezi a listát, majd egyszer végig iterál a listán és kigyűjti az átfedő
 intervallumokat. Az átfedő intervallumok listája tartalmazza a potenciális
 ütközéseket, ezt a listát érdemes szűrni az AABB-k másik két tengelye szerint,
-mielőtt a tényletes ütközés detektálás algoritmust futtatnánk. Az algoritmusnál
+mielőtt a tényleges ütközés detektálás algoritmust futtatnánk. Az algoritmusnál
 sokat számíthat a megfelelő tengely kiválasztása, rossz tengely megválasztásakor
 lehet, hogy csak a pároknak egy kis részét dobjuk el.
 #figure(
@@ -478,8 +478,8 @@ az eredmény lista sajnos $n^2$-el arányos méretű, ezeknek a kombinációja n
 lassú lenne, ezért az algoritmusokat külön futtatni nem érdemes.
 
 Egy másik megoldás lehetne, hogy az algoritmusok eredményeit nem külön helyre
-gyűjtük, hanem egy helyre, és akkor nem kell az eredményeket utólag
-kombinánlunk. Erre a következő algoritmus használható:
+gyűjtjük, hanem egy helyre, és akkor nem kell az eredményeket utólag
+kombinálnunk. Erre a következő algoritmus használható:
 + Adott egy $n times n$-es mátrix $0$ értékekkel feltöltve.
 + Futtatjuk a sort and sweep-et az első tengely szerint, és az átfedő
   intervallumokhoz $1$ értéket írunk a mátrixba.
@@ -494,17 +494,17 @@ mátrixban és a futás után $0$-t írunk az elmentett helyekre. Sajnos a
 helyreállítás költsége megegyezik a sort and sweep költségével, és ehhez még
 hozzá jön, hogy a sort and sweep-et háromszor kellett futtatni. Ugyan az
 algoritmus megspórolta nekünk az AABB metszet ellenőrzést, de cserébe 4
-sort and sweep-nyi (3 a három tegelyhez + 1 a helyreállítás) iterációt kellett
+sort and sweep-nyi (3 a három tengelyhez + 1 a helyreállítás) iterációt kellett
 végrehajtani, ami lassabb, mint az egy tengely menti sort and sweep és az AABB
 ellenőrzés.
 
 === R-Tree
 A szimulációban használt broad phase algoritmus (adatstruktúra) az R-Tree.
-Az R-Tree a B-Tree-nek egy kibővített változata, ami többdimenzió szerint
+Az R-Tree a B-Tree-nek egy kibővített változata, ami több dimenzió szerint
 rendezhető adatokra tud hatékony keresést biztosítani.
 
 A R-Tree minimal bounding box-okból épül fel. Ezek olyan AABB-k, amiknél kisebb
-AABB nem lenne képes bentfoglalni a tartalmazott elemeit. Az R-Tree-be
+AABB nem lenne képes bennfoglalni a tartalmazott elemeit. Az R-Tree-be
 felépítésekor egyesével illesztjük be az AABB-ket. Az R-Tree-nék két fontos
 algoritmus van: legjobb csúcs kiválasztása a beillesztéshez, és legjobb vágás
 kiszámítása, ha egy csúcs megtelt. A szimuláció a beillesztéshez a legkisebb
@@ -556,7 +556,7 @@ saját problémája. A szimulációban ezek közül három lett kipróbálva.
 = Percentage Closer Filtering (PCF)
 Az egyik elterjedt megoldás a PCF. Egy pixel árnyalásakor nem csak egy értéket
 olvas ki a mélységbufferből, hanem a környékről többet. Ezeket az értékeket
-mind összehasonlítja a pixel ménységével és kiszámolja, hogy milyen erős
+mind összehasonlítja a pixel mélységével és kiszámolja, hogy milyen erős
 árnyékban van a pont.
 
 #figure(
@@ -621,7 +621,7 @@ sikerült ezt a hibajavítási lépést helyesen implementálni.
 
 A szimuláció Rust-ban és OpenGL-ben lett implementálva.
 
-A program jelenleg egy szálon fut, de az ütközés detektálás (a program leglassab
+A program jelenleg egy szálon fut, de az ütközés detektálás (a program leglassabb
 része) könnyen átírható több szálra, illetve tervben van a rajzolás és a fizika
 szálainak szétválasztása, hogy a kettő ne befolyásolja egymást.
 
