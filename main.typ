@@ -1,3 +1,4 @@
+#import "@preview/cetz:0.2.2"
 #import "templ.typ": template, todo, todo_image, chapter
 
 #show: template.with(
@@ -341,10 +342,62 @@ mielőtt a tényletes ütközés detektálás algoritmust futtatnánk. Az algori
 sokat számíthat a megfelelő tengely kiválasztása, rossz tengely megválasztásakor
 lehet, hogy csak a pároknak egy kis részét dobjuk el.
 #figure(
-  todo_image[Sort and sweep intervallumok],
+  cetz.canvas({
+    import cetz.draw: *
+    import cetz.plot
+
+    let sas_circle(x, y, r) = {
+      circle(radius: 1 * r, (1 * x, 1 * y))
+      line(
+        (x - r, 6),
+        (x - r, 0),
+        (x + r, 0),
+        (x + r, 6),
+        stroke: (
+          paint: red,
+          dash: "solid",
+        ),
+        close: true
+      )
+      line(
+        (x - r, y - r),
+        (x - r, y + r),
+        (x + r, y + r),
+        (x + r, y - r),
+        stroke: (
+          paint: green,
+        ),
+        close: true
+      )
+    }
+
+    plot.plot(
+      size: (6, 6),
+      x-tick-step: none,
+      y-tick-step: none,
+      {
+        plot.annotate({
+          sas_circle(1, 1, 0.25)
+          sas_circle(1.2, 3, 0.25)
+
+          sas_circle(3, 5, 0.25)
+          sas_circle(3.2, 4.8, 0.25)
+
+          sas_circle(4.95, 1, 0.25)
+          sas_circle(5.05, 1.75, 0.25)
+          sas_circle(5.1, 2.5, 0.25)
+          sas_circle(5, 3.25, 0.25)
+          sas_circle(4.9, 4, 0.25)
+          sas_circle(5.15, 4.75, 0.25)
+        })
+        plot.add(((6, 6), (6, 6)))
+      }
+    )
+  }),
   caption: [
-    A sort and sweep algoritmus intervallumai az egyik tengelyen. Látszik, hogy
-    ha rossz tengelyt választunk ki, akkor nem segít sokat az algoritmus.
+    A sort and sweep algoritmus intervallumai az $x$ tengely szering. A jobb
+    oldalon látható, hogy ha rossz tengelyt választunk, akkor nem segít sokat az
+    algoritmus.
   ]
 )
 
@@ -386,7 +439,7 @@ AABB nem lenne képes bentfoglalni a tartalmazott elemeit. Az R-Tree-be
 felépítésekor egyesével illesztjük be az AABB-ket. Az R-Tree-nék két fontos
 algoritmus van: legjobb csúcs kiválasztása a beillesztéshez, és legjobb vágás
 kiszámítása, ha egy csúcs megtelt. A szimuláció a beillesztéshez a legkisebb
-térfogat növekedést választna, a vágáshoz a Quadratic splitet @rstar használ.
+térfogat növekedést választja, a vágáshoz a Quadratic split-et @rstar használ.
 
 #figure(
   image("rtree_cropped.png", width: 6cm),
