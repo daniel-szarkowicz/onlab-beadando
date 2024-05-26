@@ -230,13 +230,66 @@ az origó. Ha a különbségben benne van az origó, akkor ütközést talált, 
 különbségben nincs benne az origó, akkor Minkowski különbség és az origó
 távolsága a két test távolsága. A Minkowski különbség legközelebbi pontjából
 ki lehet fejteni a két test legközelebbi pontját is.
+#let minkowskidiff(triangle_position, square_position, drawline: false) = {
+  cetz.canvas({
+    import cetz.draw: *
+    import cetz.plot
+
+    plot.plot(
+      size: (6, 6),
+      axis-style: "school-book",
+      x-tick-step: none,
+      y-tick-step: none,
+      {
+        let (tx, ty) = triangle_position
+        let (sx, sy) = square_position
+        let triangle = (
+          (-1 + tx, -1 + ty),
+          ( 0 + tx,  1 + ty),
+          ( 1 + tx, -1 + ty)
+        )
+        let square = (
+          (-0.75 + sx, -0.75 + sy),
+          (-0.75 + sx,  0.75 + sy),
+          ( 0.75 + sx,  0.75 + sy),
+          ( 0.75 + sx, -0.75 + sy),
+        )
+        let alldiff = triangle.map(((tx, ty)) => {
+          square.map(((sx, sy)) => {
+            return (tx - sx, ty - sy)
+          })
+        }).flatten().chunks(2)
+        let minkowskidiff = (
+          alldiff.at(2),
+          alldiff.at(3),
+          alldiff.at(7),
+          alldiff.at(4),
+          alldiff.at(8),
+          alldiff.at(9),
+        )
+        plot.annotate({
+          line(..triangle, close: true)
+          line(..square, close: true)
+          line(..minkowskidiff, close: true, stroke: green)
+          if drawline {
+            line(triangle.at(1), square.at(0), stroke: red)
+            line((0, 0), minkowskidiff.at(3), stroke: red)
+          }
+        })
+        plot.add(((6, 6), (6, 6)))
+        plot.add(((-6, -6), (-6, -6)))
+      }
+    )
+  })
+}
+
 #figure(
   grid(columns: 2, gutter: 10pt,
-    todo_image[Minkowski különbség],
-    todo_image[Minkowski különbség],
+    minkowskidiff((-3, 3.7), (-2, 4)),
+    minkowskidiff((-3, 1.7), (-2, 4), drawline: true),
   ),
   caption: [
-    Egy #todo[TODO] és egy #todo[TODO] minkowski különbsége. Az első képen a két
+    Egy háromszög és egy négyzet minkowski különbsége. Az első képen a két
     test ütközik, a Minkowski különbségük tartalmazza az origót. A második képen
     a két test nem ütközik, a távolságuk megegyezik a Minkowski különbség és az
     origó távolságával.
@@ -295,13 +348,13 @@ pontotk a különbség support functionjétől, ha talált távolabbi pontot, ak
 kiegészíti a politópot az új ponttal, ha nem talált távolabbi pontot, akkor
 megtaláltuk a Minkowski különbség legközelebbi felszíni pontját.
 
-#figure(
-  todo_image[EPA],
-  caption: [
-    Az EPA felfedte a Minkowski különbség egy részét, amíg megtalálta a
-    legközelebbi felszíni pontot.
-  ]
-)
+// #figure(
+//   todo_image[EPA],
+//   caption: [
+//     Az EPA felfedte a Minkowski különbség egy részét, amíg megtalálta a
+//     legközelebbi felszíni pontot.
+//   ]
+// )
 
 A politóp bővítése nem egy könnyű feladat, ugyanis ha hozzáadunk egy új pontot
 a politóphoz, akkor ki kell számolni, hogy milyen régi oldalakat kell kitörölni,
