@@ -125,7 +125,7 @@ $x_J$ pontban. Ez a sebességből és a szögsebességből származó kerületi 
 összege:
 $
   v_l = v(t) + omega(t) times (x_J - x(t)) =
-    p(t) / m + (I^(-1)(t) dot L(t)) times (x_J - x(t))
+    p(t) / m + (Theta^(-1)(t) dot L(t)) times (x_J - x(t))
 $
 
 Szükség lesz még a testek lokális tehetetlenségére. Ez a test tömegéből és
@@ -138,7 +138,7 @@ $x_J$ pontban:
 $
   T^(-1)(hat(u)) = hat(u) dot big([
     hat(u) / m +
-    big((I^(-1)(t) dot big([(x_J - x(t)) times hat(u)])))
+    big((Theta^(-1)(t) dot big([(x_J - x(t)) times hat(u)])))
     times (x_J - x(t))
   ])
 $
