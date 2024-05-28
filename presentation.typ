@@ -145,9 +145,131 @@
     )
   $]
 
-  Tetszőleges konvex alakoknál: GJK és EPA
+  Tetszőleges konvex alakoknál: GJK és EPA.
+
+  Optimalizálni kell, mert az összes párosítást tesztelni lassú.
 ]
 
 #slide[
   = Árnyékok
+  Árnyék: fény hiánya
+
+  Akkor látunk árnyékot, ha a megfigyelt felület és a fény között
+  van valami.
+
+  #alternatives-cases(position: top, ("2", "3", "4", "5", "6-"), case => {
+    [
+      #show: it => if case >= 3 {
+        strike(it)
+      } else {
+        it
+      }
+      Ray tracing]
+    if case >= 1 [ (lassú#if case >= 2 [, nehéz implementálni])]
+    if case == 4 [
+
+      Shadow mapping
+    ]
+  })
 ]
+
+#slide[
+  == Shadow mapping
+  #grid(columns: (2fr, 1fr), gutter: 1em)[
+    Amit a fény "lát", az meg van világítva.
+
+    Először kirajzoljuk a világ távolságát a fény szemszögéből.
+
+    Amikor a kamera szemszögéből rajzolunk, akkor minden pixelnél megnézzük,
+    hogy a fény látja-e.
+
+    Problémák: pixeles, hirtelen átmenet.
+  ][
+    #image("pixelated_edges_cropped.png")
+  ]
+]
+
+#slide[
+ == PCF
+  #grid(columns: (2fr, 1fr), gutter: 1em)[
+    Számoljuk ki az árnyékoltságot a környező pixelekre is.
+
+    Az árnyék intenzitása ezeknek az átlaga lesz.
+
+    Eredmény: az árnyék szélén szép átmenet van.
+  ][
+    #image("pcf_cropped.png")
+  ]
+]
+
+#slide[
+  == CSM
+  #grid(columns: (3fr, 2fr), gutter: 1em)[
+    Használjunk több depth buffert.
+
+    Közelre jobb pixel sűrűség, távolra nagyobb lefedettség.
+
+    Használható a legtöbb shadow mapping technikával.
+  ][
+    #image("csm_cropped.png")
+  ]
+]
+
+#slide[
+  = Implementáció és eredmények
+
+  Rust + OpenGL
+
+  1000+ kocka valós időben
+
+  10000+ kocka nem valós időben, de előre lehet számolni és a visszajátszás
+  "valós idejű"
+
+  Demó?
+]
+
+#page(margin: 0pt)[
+  #image("wrecking_ball.png")
+  #image("carpet_bomb.png")
+]
+
+#slide[
+  == Bővítési lehetőségek
+
+  Fizika és rajzolás külön szálakon
+
+  Ütközés detektálás több szálon
+
+  R-Tree optimalizálás (R\*-Tree, bulk loading)
+
+  Több részből álló testek, jointok
+]
+
+#slide[
+  #align(horizon + center)[= Köszönöm a figyelmet!]
+
+  #align(bottom)[
+    #set text(size: 0.5em)
+    #let truncurl(url) = {
+      layout(size => {
+        let maxwidth = size.width
+        if measure(url).width > maxwidth {
+          let len = url.len()
+          while measure[#url.slice(0, len)...].width > maxwidth {
+            len -= 1
+          }
+          link(url)[#url.slice(0, len)...]
+        } else {
+          link(url)
+        }
+      })
+    }
+    Források:
+    - #truncurl("https://www.cs.cmu.edu/~baraff/sigcourse/notesd1.pdf")
+    - #truncurl("https://www.cs.cmu.edu/~baraff/sigcourse/notesd2.pdf")
+    - #truncurl("https://learnopengl.com/Advanced-Lighting/Shadows/Shadow-Mapping")
+    - #truncurl("https://developer.nvidia.com/gpugems/gpugems2/part-ii-shading-lighting-and-shadows/chapter-17-efficient-soft-edged-shadows-using")
+    - #truncurl("https://developer.download.nvidia.com/SDK/10.5/opengl/src/cascaded_shadow_maps/doc/cascaded_shadow_maps.pdf")
+  ]
+]
+
