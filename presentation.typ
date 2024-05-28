@@ -23,7 +23,7 @@
 ]
 
 #slide[
-  = Merevtest
+  = Merev test
   Mindennapi testek ideális modellje.
 
   Nem lehet összenyomni, nem metszhetik egymást.
