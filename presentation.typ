@@ -15,6 +15,9 @@
 
 #title-slide[
   = Merevtest- és árnyékszimuláció
+
+  #v(0.5em)
+  #text(size: 0.8em)[_Játékmotor fejlesztés OpenGL-ben_]
   #v(2em)
 
   Készítette: Szarkowicz Dániel
@@ -150,6 +153,74 @@
   Optimalizálni kell, mert az összes párosítást tesztelni lassú.
 ]
 
+#let minkowskidiff(triangle_position, square_position, drawline: false) = {
+  cetz.canvas({
+    import cetz.draw: *
+    import cetz.plot
+
+    plot.plot(
+      size: (8, 8),
+      axis-style: "school-book",
+      x-tick-step: none,
+      y-tick-step: none,
+      {
+        let (tx, ty) = triangle_position
+        let (sx, sy) = square_position
+        let triangle = (
+          (-1 + tx, -1 + ty),
+          ( 0 + tx,  1 + ty),
+          ( 1 + tx, -1 + ty)
+        )
+        let square = (
+          (-0.75 + sx, -0.75 + sy),
+          (-0.75 + sx,  0.75 + sy),
+          ( 0.75 + sx,  0.75 + sy),
+          ( 0.75 + sx, -0.75 + sy),
+        )
+        let alldiff = triangle.map(((tx, ty)) => {
+          square.map(((sx, sy)) => {
+            return (tx - sx, ty - sy)
+          })
+        }).flatten().chunks(2)
+        let minkowskidiff = (
+          alldiff.at(2),
+          alldiff.at(3),
+          alldiff.at(7),
+          alldiff.at(4),
+          alldiff.at(8),
+          alldiff.at(9),
+        )
+        plot.annotate({
+          line(..triangle, close: true)
+          line(..square, close: true)
+          line(..minkowskidiff, close: true, stroke: green)
+          if drawline {
+            line(triangle.at(1), square.at(0), stroke: red)
+            line((0, 0), minkowskidiff.at(3), stroke: red)
+          }
+        })
+        plot.add(((6, 6), (6, 6)))
+        plot.add(((-6, -6), (-6, -6)))
+      }
+    )
+  })
+}
+
+#slide[
+  == Gilbert-Johnson-Keerthi
+  #grid(columns: (1fr, auto))[
+    Távolság számítás tetszőleges konvex testekre
+
+    Minkowski különbség
+
+    Különbség és orgigó távolsága $=$ testek távolsága
+
+    EPA ennek a  kiegészítése
+  ][
+    #minkowskidiff((-3, 1.7), (-2, 4), drawline: true)
+  ]
+]
+
 #slide[
   = Árnyékok
   Árnyék: fény hiánya
@@ -236,6 +307,8 @@
 #slide[
   == Bővítési lehetőségek
 
+  Nyugalmi érintkezés
+
   Fizika és rajzolás külön szálakon
 
   Ütközés detektálás több szálon
@@ -246,30 +319,32 @@
 ]
 
 #slide[
-  #align(horizon + center)[= Köszönöm a figyelmet!]
-
-  #align(bottom)[
-    #set text(size: 0.5em)
-    #let truncurl(url) = {
-      layout(size => {
-        let maxwidth = size.width
-        if measure(url).width > maxwidth {
-          let len = url.len()
-          while measure[#url.slice(0, len)...].width > maxwidth {
-            len -= 1
-          }
-          link(url)[#url.slice(0, len)...]
-        } else {
-          link(url)
+  #let truncurl(url) = {
+    layout(size => {
+      let maxwidth = size.width
+      if measure(url).width > maxwidth {
+        let len = url.len()
+        while measure[#url.slice(0, len)...].width > maxwidth {
+          len -= 1
         }
-      })
-    }
-    Források:
-    - #truncurl("https://www.cs.cmu.edu/~baraff/sigcourse/notesd1.pdf")
-    - #truncurl("https://www.cs.cmu.edu/~baraff/sigcourse/notesd2.pdf")
-    - #truncurl("https://learnopengl.com/Advanced-Lighting/Shadows/Shadow-Mapping")
-    - #truncurl("https://developer.nvidia.com/gpugems/gpugems2/part-ii-shading-lighting-and-shadows/chapter-17-efficient-soft-edged-shadows-using")
-    - #truncurl("https://developer.download.nvidia.com/SDK/10.5/opengl/src/cascaded_shadow_maps/doc/cascaded_shadow_maps.pdf")
-  ]
+        link(url)[#url.slice(0, len)...]
+      } else {
+        link(url)
+      }
+    })
+  }
+
+  == Források
+  - #truncurl("https://www.cs.cmu.edu/~baraff/sigcourse/notesd1.pdf")
+  - #truncurl("https://www.cs.cmu.edu/~baraff/sigcourse/notesd2.pdf")
+  - #truncurl("https://graphics.stanford.edu/courses/cs448b-00-winter/papers/gilbert.pdf")
+  - #truncurl("https://dyn4j.org/2010/04/gjk-gilbert-johnson-keerthi/")
+  - #truncurl("https://learnopengl.com/Advanced-Lighting/Shadows/Shadow-Mapping")
+  - #truncurl("https://developer.nvidia.com/gpugems/gpugems2/part-ii-shading-lighting-and-shadows/chapter-17-efficient-soft-edged-shadows-using")
+  - #truncurl("https://developer.download.nvidia.com/SDK/10.5/opengl/src/cascaded_shadow_maps/doc/cascaded_shadow_maps.pdf")
+]
+
+#slide[
+  #align(horizon + center)[= Köszönöm a figyelmet!]
 ]
 
