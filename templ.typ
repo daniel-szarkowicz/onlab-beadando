@@ -13,6 +13,7 @@
   author: [Mézga Géza],
   consulent: [Gézga Méza],
   date: [#datetime.today().display()],
+  showoutline: true,
   body
 ) = {
   set text(font: "New Computer Modern", lang: "hu")
@@ -76,7 +77,9 @@
   ]
   counter(page).update(1)
 
-  outline()
+  if showoutline {
+    outline()
+  }
 
   set heading(offset: 1)
 
